@@ -1,0 +1,61 @@
+name:                fixedlist
+version:             0.1.0.0
+license:             MIT
+author:              "Markus Läll <markus.l2ll@gmail.com>"
+category:            Data
+extra-source-files:  CHANGELOG.md
+
+_ghc-options: &ghc-options "-Wall -Wno-type-defaults -Wno-name-shadowing -Wno-unticked-promoted-constructors"
+
+library:
+  source-dirs:           src
+  ghc-options:           *ghc-options
+  exposed-modules:
+  - Data.List.Fixed
+  dependencies:
+  - base
+
+default-extensions:
+- Arrows
+- BangPatterns
+- ConstraintKinds
+- DataKinds
+- DefaultSignatures
+- DeriveAnyClass
+- DeriveDataTypeable
+- DeriveFunctor
+- DeriveGeneric
+- DerivingVia
+- DerivingStrategies
+- EmptyDataDecls
+- ExtendedDefaultRules
+- FlexibleContexts
+- FlexibleInstances
+- FunctionalDependencies
+- GADTs
+- InstanceSigs
+- KindSignatures
+- LambdaCase
+- MultiParamTypeClasses
+- MultiWayIf
+- NamedFieldPuns
+- NoImplicitPrelude
+- NoMonomorphismRestriction
+- OverloadedLabels
+- OverloadedStrings
+- PolyKinds
+- QuasiQuotes
+- RankNTypes
+- RecordWildCards
+- RecursiveDo
+- ScopedTypeVariables
+- StandaloneDeriving
+- TemplateHaskell
+- TupleSections
+- TypeApplications
+- TypeFamilies
+- TypeFamilyDependencies
+- TypeInType
+- TypeOperators
+- TypeSynonymInstances
+- ViewPatterns
