@@ -9,11 +9,15 @@ _ghc-options: &ghc-options "-Wall -Wno-type-defaults -Wno-name-shadowing -Wno-un
 
 library:
   source-dirs:           src
-  ghc-options:           *ghc-options
+  ghc-options:
+  - *ghc-options
+  - -Wno-unticked-promoted-constructors
   exposed-modules:
   - Data.List.Fixed
   dependencies:
   - base
+
+
 
 default-extensions:
 - Arrows
