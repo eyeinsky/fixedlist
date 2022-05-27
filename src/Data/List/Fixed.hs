@@ -4,6 +4,7 @@ module Data.List.Fixed
   ) where
 
 import Prelude
+import Data.Kind
 import Data.Proxy
 import Data.Coerce
 import GHC.TypeLits
@@ -93,7 +94,7 @@ type NatListC n a =
   , Element (PeanoListF (Prev (ToPeano n)) a) ~ a)
 type NatList n a = PeanoList (Prev (ToPeano n)) a
 genList
-  :: forall (n :: Nat) (a :: *) (m :: * -> *).
+  :: forall (n :: Nat) (a :: Type) (m :: Type -> Type).
    ( Monad m, NatListC n a )
   => Proxy n -> m a -> m (NatList n a)
 genList _ m = PeanoList <$> generate m
