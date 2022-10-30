@@ -6,6 +6,7 @@ module Data.List.Fixed
 import Prelude
 import Data.Kind
 import Data.Proxy
+import Data.Kind (Type)
 import Data.Coerce
 import GHC.TypeLits
 
