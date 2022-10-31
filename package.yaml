@@ -17,8 +17,6 @@ library:
   dependencies:
   - base
 
-
-
 default-extensions:
 - Arrows
 - BangPatterns
@@ -29,14 +27,15 @@ default-extensions:
 - DeriveDataTypeable
 - DeriveFunctor
 - DeriveGeneric
-- DerivingVia
 - DerivingStrategies
+- DerivingVia
 - EmptyDataDecls
 - ExtendedDefaultRules
 - FlexibleContexts
 - FlexibleInstances
 - FunctionalDependencies
 - GADTs
+- ImportQualifiedPost
 - InstanceSigs
 - KindSignatures
 - LambdaCase
