@@ -53,12 +53,12 @@ init = \case
     -- _ -> x :| init xs -- Doesn't work, need to match on :| to get the constraint.
     _ :| _ -> x :| init xs
 
--- uncons :: [a] -> Maybe (a, [a])
+--  NOT IMPLEMENTED: uncons :: [a] -> Maybe (a, [a])
 
 singleton :: x -> List (Succ Zero) x
 singleton x = x :| Nil
 
--- null :: Foldable t => t a -> Bool
+-- NOT IMPLEMENTED: null :: Foldable t => t a -> Bool
 
 length :: List n x -> P.Int
 length = \case
@@ -70,11 +70,12 @@ map f = \case
   Nil -> Nil
   x :| xs -> f x :| map f xs
 
+--
 reverse :: forall n x . List n x -> List n x
 reverse xs =
-  -- todo
-  reverse1 xs Nil
-  -- bla xs Nil
+  todo
+  -- reverse1 xs Nil
+  -- reverse2 xs Nil
   -- • Couldn't match type ‘n’ with ‘Add n 'Zero’
   --   Expected: List n x
   --     Actual: List (Add n 'Zero) x
@@ -104,7 +105,57 @@ reverse2 as bs = case as of
        . List (Succ a) x -> List b x -> (List a x, List (Succ b) x)
     move (a :| from) to = (from, a :| to)
 
+type family Intersperse (n :: Peano) :: Peano where
+  Intersperse (Succ (Succ a)) = Succ (Succ (Intersperse (Succ a)))
+  Intersperse a = a
 
+type Tests =
+  ( FromPeano (Intersperse (ToPeano 0)) ~ 0
+  , FromPeano (Intersperse (ToPeano 1)) ~ 1
+  , FromPeano (Intersperse (ToPeano 2)) ~ 3
+  , FromPeano (Intersperse (ToPeano 3)) ~ 5
+  , FromPeano (Intersperse (ToPeano 4)) ~ 7
+  , FromPeano (Intersperse (ToPeano 5)) ~ 9
+  )
+test_intersperse :: Tests => ()
+test_intersperse = ()
+
+intersperse :: forall n x . x -> List n x -> List (Intersperse n) x
+intersperse x = \case
+  Nil -> Nil
+  xs@(_ :| Nil) -> xs
+  x0 :| tail@(x1 :| xs) -> let
+    _ = tail :: (Succ n' ~ n) => List n' x -- Tail is one-shorter than arg.
+    in x0 :| x :| intersperse x tail
+
+-- NOT IMPLEMENTED: In the Data.List version of intersperse, the
+-- list-of-lists argument can vary in length, but our fixed length
+-- list (naively) can't, so it doesn't make sense to implement that
+-- per se. But it might make sense to have a wrapper hiding the
+-- lengths in the inner lists, then recover the lengths at intercalate
+-- time, and then hide it again in the end.
+--
+-- type family Intercalate (n :: Peano) :: Peano where
+-- intercalate :: List a x -> List b (List c x) -> List c x
+-- intercalate = todo
+
+-- transpose :: List a (List b x) -> List b (List a x)
+-- transpose xs = todo
+
+-- subsequences :: List n x ->
+-- subsequences = todo
+
+-- permutations :: [a] -> [[a]]
+-- permutations = todo
+
+instance P.Foldable (List n) where
+  foldMap :: P.Monoid m => (a -> m) -> List n a -> m
+  foldMap f = \case
+    Nil -> P.mempty
+    x :| xs -> f x P.<> P.foldMap f xs
+-- ^ Implements: foldl, foldl', foldl1, foldr, foldr1
+
+-- TODO: foldl1'
 
 -- * Helpers
 
