@@ -2,11 +2,14 @@
 module Data.Peano where
 
 import GHC.TypeLits
+import Data.Kind (Constraint)
 
 -- * Peano
 
 data Peano = Zero | Succ Peano
 
+
+-- | Convert GHC.TypeLits Nat to Peano
 type family ToPeano (n :: Nat) = (p :: Peano) where
   ToPeano 0 = Zero
   ToPeano n = Succ (ToPeano (n - 1))
@@ -36,4 +39,3 @@ type family Add (a :: Peano) (b :: Peano) = (c :: Peano) where
 type family Subtract (a :: Peano) (b :: Peano) = (c :: Peano) where
   Subtract (Succ a) (Succ b) = Subtract a b
   Subtract a Zero = a
->>>>>>> 0e3a7e4 (Add FromPeano and Subtract type families)
