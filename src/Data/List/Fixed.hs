@@ -24,6 +24,11 @@ type family PeanoListF p a = li where
 
 newtype PeanoList p a = PeanoList (PeanoListF p a)
 
+type family Length a = (b :: Peano) where
+  Length (a :* b) = Succ (Length b)
+  Length a = Succ Zero
+
+
 -- ** Instances
 
 deriving instance (Show a, Show as) => Show (a :* as)
@@ -99,3 +104,23 @@ genList
    ( Monad m, NatListC n a )
   => Proxy n -> m a -> m (NatList n a)
 genList _ m = PeanoList <$> generate m
+
+-- * API
+
+{- Want:
+
+-}
+
+(++) :: forall p0 p1 a . PeanoList p0 a -> PeanoList p1 a -> PeanoList (Add p0 p1) a
+PeanoList l1 ++ PeanoList l2 = case l1 of
+  a :* b -> undefined
+
+
+-- singleton :: a -> PeanoList Zero a
+-- singleton a = PeanoList a
+
+-- fromList :: forall p a. [a] -> Maybe (PeanoList p a)
+-- fromList as = undefined
+
+-- (!) :: forall p a. () => (PeanoList p a)
+-- (!) = undefined
